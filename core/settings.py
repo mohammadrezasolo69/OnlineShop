@@ -33,6 +33,7 @@ INSTALLED_APPS = [
 
     # my app
     'bucket.apps.BucketConfig',
+    'account.apps.AccountConfig',
 ]
 
 MIDDLEWARE = [
@@ -144,3 +145,6 @@ AWS_S3_ENDPOINT_URL = env('AWS_S3_ENDPOINT_URL')
 AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
 AWS_SERVICE_NAME = env('AWS_SERVICE_NAME')
 AWS_S3_FILE_OVERWRITE = env('AWS_S3_FILE_OVERWRITE')
+
+# Config UserModel
+AUTH_USER_MODEL = 'account.CustomUser'
