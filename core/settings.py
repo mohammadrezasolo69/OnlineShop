@@ -157,8 +157,11 @@ AWS_S3_FILE_OVERWRITE = env('AWS_S3_FILE_OVERWRITE')
 # Config UserModel
 AUTH_USER_MODEL = 'account.CustomUser'
 LOGIN_URL = 'account:login'
-LOGOUT_URL = ''
-LOGIN_REDIRECT_URL = ''
+LOGOUT_URL = 'account:logout'
+LOGIN_REDIRECT_URL = 'account:register'
+
+# Config Email
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Config Social
 AUTHENTICATION_BACKENDS = (

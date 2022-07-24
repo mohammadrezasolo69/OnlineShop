@@ -1,10 +1,15 @@
 from django.shortcuts import render, redirect
 from django.views import generic
-from account.forms import LoginForm, RegisterForm
+from account.forms import LoginForm, RegisterForm, ResetPasswordForm, ResetPasswordConfirmForm
 from django.contrib.auth import login, logout, authenticate, get_user_model
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
+from django.contrib.auth.views import PasswordResetView, PasswordResetConfirmView, PasswordResetCompleteView, \
+    PasswordResetDoneView
 
 
+# ////////////////////////////////// Login User \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 class LoginView(generic.View):
     form_class = LoginForm
     template_name = 'account/login.html'
@@ -26,6 +31,7 @@ class LoginView(generic.View):
         return render(request, self.template_name, {'form': form})
 
 
+# ////////////////////////////////// Register User \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 class RegisterView(generic.View):
     form_class = RegisterForm
     template_name = 'account/register.html'
@@ -48,3 +54,33 @@ class RegisterView(generic.View):
             return redirect('account:login')
         messages.error(request, 'You have entered your mobile number or email or password incorrectly .', 'warning')
         return render(request, self.template_name, {'form': form})
+
+
+# ////////////////////////////////// Logout User \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+class LogoutView(LoginRequiredMixin, generic.View):
+    def get(self, request):
+        logout(request)
+        messages.success(request, 'You have successfully logged out .', 'success')
+        return redirect('account:login')
+
+
+# ////////////////////////////////// Password Reset User \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+class ResetPasswordView(PasswordResetView):
+    template_name = 'account/password_reset.html'
+    email_template_name = 'account/password_reset_send_email.html'
+    form_class = ResetPasswordForm
+    success_url = reverse_lazy('account:password_reset_done')
+
+
+class ResetPasswordDoneView(PasswordResetDoneView):
+    template_name = "account/password_reset_done.html"
+
+
+class ResetPasswordConfirmView(PasswordResetConfirmView):
+    template_name = 'account/password_reset_confirm.html'
+    form_class = ResetPasswordConfirmForm
+    success_url = reverse_lazy("account:password_reset_complete")
+
+
+class UserPasswordResetCompleteView(PasswordResetCompleteView):
+    template_name = 'account/password_reset_complete.html'

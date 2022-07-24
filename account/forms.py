@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.core.validators import RegexValidator
 from django.core import validators
+from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
 
 messages = {
     'required': ' This field is required.',
@@ -94,3 +95,38 @@ class RegisterForm(LoginForm):
         if (password2 and password) and (password2 != password):
             raise ValueError('Password and confirm password do not match')
         return password2
+
+
+# ////////////////////////////////// Password Reset User \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+class ResetPasswordForm(PasswordResetForm):
+    email = forms.EmailField(label='Email', error_messages=messages,
+                             widget=forms.EmailInput(
+                                 attrs={
+                                     "id": "form1Example13",
+                                     "class": "form-control form-control-lg",
+                                     'placeholder': 'enter your email address . ',
+                                 }))
+
+
+class ResetPasswordConfirmForm(SetPasswordForm):
+    new_password1 = forms.CharField(label='New Password', error_messages=messages,
+                               widget=forms.PasswordInput(attrs={
+                                   "id": "form1Example13",
+                                   "class": "form-control form-control-lg",
+                                   'placeholder': 'enter your password . ',
+                               }))
+
+    new_password2 = forms.CharField(label='Confirm Password', error_messages=messages,
+                                widget=forms.PasswordInput(attrs={
+                                    "id": "form1Example13",
+                                    "class": "form-control form-control-lg",
+                                    'placeholder': 'enter your confirm password . ',
+                                }))
+
+    def clean_password2(self):
+        new_password1 = self.cleaned_data['new_password1']
+        new_password2 = self.cleaned_data['new_password2']
+        if new_password2 != new_password1:
+            raise ValueError('Password and confirm password do not match')
+        return new_password2
