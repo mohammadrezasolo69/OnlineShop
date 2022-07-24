@@ -30,6 +30,7 @@ INSTALLED_APPS = [
 
     # 3rd party
     'storages',
+    'social_django',
 
     # my app
     'bucket.apps.BucketConfig',
@@ -44,6 +45,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    # social
+    'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
 ROOT_URLCONF = 'core.urls'
@@ -59,6 +63,10 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
+                # social
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -149,4 +157,14 @@ AWS_S3_FILE_OVERWRITE = env('AWS_S3_FILE_OVERWRITE')
 # Config UserModel
 AUTH_USER_MODEL = 'account.CustomUser'
 LOGIN_URL = 'account:login'
+LOGOUT_URL = ''
+LOGIN_REDIRECT_URL = ''
 
+# Config Social
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.github.GithubOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+SOCIAL_AUTH_GITHUB_KEY = env('SOCIAL_AUTH_GITHUB_KEY')
+SOCIAL_AUTH_GITHUB_SECRET = env('SOCIAL_AUTH_GITHUB_SECRET')
