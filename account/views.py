@@ -16,6 +16,8 @@ class LoginView(generic.View):
     template_name = 'account/login.html'
 
     def get(self, request):
+        if request.user.is_authenticated:
+            return redirect('account:profile')
         form = self.form_class
         return render(request, self.template_name, {'form': form})
 
@@ -89,11 +91,20 @@ class UserPasswordResetCompleteView(PasswordResetCompleteView):
 
 # ////////////////////////////////// Password Change \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
-class ChangePasswordView(PasswordChangeView):
+class ChangePasswordView(LoginRequiredMixin, PasswordChangeView):
     form_class = ChangePasswordForm
     template_name = 'account/password_change.html'
     success_url = reverse_lazy('account:password_change_done')
 
 
-class ChangePasswordDoneView(PasswordChangeDoneView):
+class ChangePasswordDoneView(LoginRequiredMixin, PasswordChangeDoneView):
     template_name = 'account/password_change_done.html'
+
+
+# ///////////////////////////////////// Profile User \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+class ProfileView(LoginRequiredMixin, generic.View):
+    template_name = 'account/profile.html'
+
+    def get(self, request):
+        return render(request, self.template_name, {})
