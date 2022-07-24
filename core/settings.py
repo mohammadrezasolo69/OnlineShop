@@ -148,3 +148,5 @@ AWS_S3_FILE_OVERWRITE = env('AWS_S3_FILE_OVERWRITE')
 
 # Config UserModel
 AUTH_USER_MODEL = 'account.CustomUser'
+LOGIN_URL = 'account:login'
+
