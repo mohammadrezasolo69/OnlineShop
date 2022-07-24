@@ -161,7 +161,7 @@ LOGOUT_URL = 'account:logout'
 LOGIN_REDIRECT_URL = 'account:register'
 
 # Config Email
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # todo : add SMTP
 
 # Config Social
 AUTHENTICATION_BACKENDS = (

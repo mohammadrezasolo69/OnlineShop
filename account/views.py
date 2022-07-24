@@ -1,12 +1,13 @@
 from django.shortcuts import render, redirect
 from django.views import generic
-from account.forms import LoginForm, RegisterForm, ResetPasswordForm, ResetPasswordConfirmForm
 from django.contrib.auth import login, logout, authenticate, get_user_model
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.contrib.auth.views import PasswordResetView, PasswordResetConfirmView, PasswordResetCompleteView, \
-    PasswordResetDoneView
+    PasswordResetDoneView, PasswordChangeView, PasswordChangeDoneView
+
+from account.forms import LoginForm, RegisterForm, ResetPasswordForm, ResetPasswordConfirmForm, ChangePasswordForm
 
 
 # ////////////////////////////////// Login User \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -84,3 +85,15 @@ class ResetPasswordConfirmView(PasswordResetConfirmView):
 
 class UserPasswordResetCompleteView(PasswordResetCompleteView):
     template_name = 'account/password_reset_complete.html'
+
+
+# ////////////////////////////////// Password Change \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+class ChangePasswordView(PasswordChangeView):
+    form_class = ChangePasswordForm
+    template_name = 'account/password_change.html'
+    success_url = reverse_lazy('account:password_change_done')
+
+
+class ChangePasswordDoneView(PasswordChangeDoneView):
+    template_name = 'account/password_change_done.html'

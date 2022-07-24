@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.core.validators import RegexValidator
 from django.core import validators
-from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
+from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm, PasswordChangeForm
 
 messages = {
     'required': ' This field is required.',
@@ -111,18 +111,18 @@ class ResetPasswordForm(PasswordResetForm):
 
 class ResetPasswordConfirmForm(SetPasswordForm):
     new_password1 = forms.CharField(label='New Password', error_messages=messages,
-                               widget=forms.PasswordInput(attrs={
-                                   "id": "form1Example13",
-                                   "class": "form-control form-control-lg",
-                                   'placeholder': 'enter your password . ',
-                               }))
+                                    widget=forms.PasswordInput(attrs={
+                                        "id": "form1Example13",
+                                        "class": "form-control form-control-lg",
+                                        'placeholder': 'enter your password . ',
+                                    }))
 
     new_password2 = forms.CharField(label='Confirm Password', error_messages=messages,
-                                widget=forms.PasswordInput(attrs={
-                                    "id": "form1Example13",
-                                    "class": "form-control form-control-lg",
-                                    'placeholder': 'enter your confirm password . ',
-                                }))
+                                    widget=forms.PasswordInput(attrs={
+                                        "id": "form1Example13",
+                                        "class": "form-control form-control-lg",
+                                        'placeholder': 'enter your confirm password . ',
+                                    }))
 
     def clean_password2(self):
         new_password1 = self.cleaned_data['new_password1']
@@ -130,3 +130,13 @@ class ResetPasswordConfirmForm(SetPasswordForm):
         if new_password2 != new_password1:
             raise ValueError('Password and confirm password do not match')
         return new_password2
+
+
+# ////////////////////////////////// Password Reset User \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+class ChangePasswordForm(ResetPasswordConfirmForm, PasswordChangeForm):
+    old_password = forms.CharField(label='Old Password', error_messages=messages,
+                                   widget=forms.PasswordInput(attrs={
+                                       "id": "form1Example13",
+                                       "class": "form-control form-control-lg",
+                                       'placeholder': 'enter your password . ',
+                                   }))

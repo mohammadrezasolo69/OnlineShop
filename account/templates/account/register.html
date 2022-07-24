@@ -24,7 +24,7 @@
                         <div class="form-outline mb-4" style="padding-top: 20px">
                             {{ form.full_name.label }}
                             {{ form.full_name }}
-                            {{ form.full_name.errors }}
+                            <span style="color: #ba2121"> {{ form.full_name.errors }}</span>
                         </div>
 
 
@@ -32,28 +32,28 @@
                         <div class="form-outline mb-4" style="padding-top: 20px">
                             {{ form.email.label }}
                             {{ form.email }}
-                            {{ form.email.errors }}
+                            <span style="color: #ba2121"> {{ form.email.errors }}</span>
                         </div>
 
                         <!-- Phone Number input -->
                         <div class="form-outline mb-4" style="padding-top: 20px">
                             {{ form.phone_number.label }}
                             {{ form.phone_number }}
-                            {{ form.phone_number.errors }}
+                            <span style="color: #ba2121"> {{ form.phone_number.errors }}</span>
                         </div>
 
                         <!-- Password input -->
                         <div class="form-outline mb-4" style="padding-top: 20px">
                             {{ form.password.label }}
                             {{ form.password }}
-                            {{ form.password.errors }}
+                            <span style="color: #ba2121"> {{ form.password.errors }}</span>
                         </div>
 
                         <!-- Password Confirm input -->
                         <div class="form-outline mb-4" style="padding-top: 20px">
                             {{ form.password2.label }}
                             {{ form.password2 }}
-                            {{ form.password2.errors }}
+                            <span style="color: #ba2121"> {{ form.password2.errors }}</span>
                         </div>
 
 
@@ -63,7 +63,7 @@
                                 <input class="form-check-input" type="checkbox" value="" id="form1Example3" checked/>
                                 <label class="form-check-label" for="form1Example3"> Remember me </label>
                             </div>
-                            <a href="#!">Forgot password?</a>
+                            <a href="{% url 'account:password_reset' %}" style="color: white">Forgot password?</a>
                         </div>
 
                         <!-- Submit button -->
