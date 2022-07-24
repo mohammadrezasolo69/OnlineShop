@@ -15,13 +15,31 @@
                          class="img-fluid" alt="Phone image">
                 </div>
                 <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
+
                     <form method="POST">
                         {% csrf_token %}
+
+
+                        <!-- Full phone_numberName input -->
+                        <div class="form-outline mb-4" style="padding-top: 20px">
+                            {{ form.full_name.label }}
+                            {{ form.full_name }}
+                            {{ form.full_name.errors }}
+                        </div>
+
+
                         <!-- Email input -->
                         <div class="form-outline mb-4" style="padding-top: 20px">
                             {{ form.email.label }}
                             {{ form.email }}
                             {{ form.email.errors }}
+                        </div>
+
+                        <!-- Phone Number input -->
+                        <div class="form-outline mb-4" style="padding-top: 20px">
+                            {{ form.phone_number.label }}
+                            {{ form.phone_number }}
+                            {{ form.phone_number.errors }}
                         </div>
 
                         <!-- Password input -->
@@ -30,6 +48,14 @@
                             {{ form.password }}
                             {{ form.password.errors }}
                         </div>
+
+                        <!-- Password Confirm input -->
+                        <div class="form-outline mb-4" style="padding-top: 20px">
+                            {{ form.password2.label }}
+                            {{ form.password2 }}
+                            {{ form.password2.errors }}
+                        </div>
+
 
                         <div class="d-flex justify-content-around align-items-center mb-4" style="padding-top: 50px">
                             <!-- Checkbox -->
@@ -41,17 +67,16 @@
                         </div>
 
                         <!-- Submit button -->
-                        <button type="submit" class="btn btn-primary btn-lg btn-block">Sign in</button>
+                        <button type="submit" class="btn btn-primary btn-lg btn-block">Sign Up</button>
 
                         <div class="divider d-flex align-items-center my-4">
                             <p class="text-center fw-bold mx-3 mb-0 text-muted">OR</p>
                         </div>
 
                         <!-- login whit GitHub -->
-
                         <a class="btn btn-primary btn-lg btn-block" style="background-color: #ba2121"
-                           href="{% url 'account:register' %}" role="button">
-                            Sign Up
+                           href="{% url 'account:login' %}" role="button">
+                            Sign In
                         </a>
 
                         <a class="btn btn-primary btn-lg btn-block" style="background-color: #000000"
