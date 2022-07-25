@@ -140,3 +140,14 @@ class ChangePasswordForm(ResetPasswordConfirmForm, PasswordChangeForm):
                                        "class": "form-control form-control-lg",
                                        'placeholder': 'enter your password . ',
                                    }))
+
+
+class ProfileEditForm(forms.ModelForm):
+    class Meta:
+        model = get_user_model()
+        fields = ('email', 'phone_number', 'full_name', 'avatar', 'beo')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs['class'] = 'form-control form-control-lg'

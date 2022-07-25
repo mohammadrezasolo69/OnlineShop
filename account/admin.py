@@ -8,7 +8,7 @@ User = get_user_model()
 
 @admin.register(User)
 class CustomUserAdmin(UserAdmin):
-    list_display = ('email', 'full_name', 'phone_number', 'is_staff', 'is_superuser')
+    list_display = ('email',"id", 'full_name', 'phone_number', 'is_staff', 'is_superuser')
     list_editable = ('is_staff', 'is_superuser')
     list_filter = ('is_staff', 'is_superuser')
     search_fields = ('email', 'phone_number', 'full_name')

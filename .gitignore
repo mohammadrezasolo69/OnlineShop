@@ -7,6 +7,7 @@ __pycache__/
 ./.idea
 .idea/
 mian.html
+todo.py
 
 # C extensions
 *.so

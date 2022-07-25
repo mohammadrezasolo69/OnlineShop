@@ -158,7 +158,7 @@ AWS_S3_FILE_OVERWRITE = env('AWS_S3_FILE_OVERWRITE')
 AUTH_USER_MODEL = 'account.CustomUser'
 LOGIN_URL = 'account:login'
 LOGOUT_URL = 'account:logout'
-LOGIN_REDIRECT_URL = 'account:register'
+LOGIN_REDIRECT_URL = 'account:profile'
 
 # Config Email
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # todo : add SMTP

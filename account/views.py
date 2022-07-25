@@ -7,7 +7,9 @@ from django.urls import reverse_lazy
 from django.contrib.auth.views import PasswordResetView, PasswordResetConfirmView, PasswordResetCompleteView, \
     PasswordResetDoneView, PasswordChangeView, PasswordChangeDoneView
 
-from account.forms import LoginForm, RegisterForm, ResetPasswordForm, ResetPasswordConfirmForm, ChangePasswordForm
+from account.forms import (
+    LoginForm, RegisterForm, ResetPasswordForm, ResetPasswordConfirmForm, ChangePasswordForm, ProfileEditForm
+)
 
 
 # ////////////////////////////////// Login User \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -108,3 +110,10 @@ class ProfileView(LoginRequiredMixin, generic.View):
 
     def get(self, request):
         return render(request, self.template_name, {})
+
+
+class ProfileEditView(LoginRequiredMixin, generic.UpdateView):
+    model = get_user_model()
+    form_class = ProfileEditForm
+    template_name = 'account/profile_edit.html'
+    success_url = reverse_lazy('account:profile')
