@@ -8,7 +8,7 @@ User = get_user_model()
 
 @admin.register(User)
 class CustomUserAdmin(UserAdmin):
-    list_display = ('email', 'full_name', 'phone_number', 'is_staff', 'is_superuser')
+    list_display = ('email', "id", 'full_name', 'phone_number', 'is_staff', 'is_superuser')
     list_editable = ('is_staff', 'is_superuser')
     list_filter = ('is_staff', 'is_superuser')
     search_fields = ('email', 'phone_number', 'full_name')
@@ -18,10 +18,10 @@ class CustomUserAdmin(UserAdmin):
         (('Personal info'), {'fields': ('full_name', 'beo', 'avatar', 'email', 'password')}),
 
         (('Permissions'), {
-            'fields': ('is_active', 'is_staff', 'is_superuser'),
+            'fields': ('is_active', 'is_staff', 'is_superuser',),
         }),
 
-        (('Important dates'), {'fields': ('last_login', 'date_joined')}),
+        (('Important dates'), {'fields': ('last_login', 'date_joined', 'is_verify')}),
     )
 
     add_fieldsets = (
