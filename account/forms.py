@@ -9,6 +9,8 @@ messages = {
     'required': ' This field is required.',
     'invalid': 'The email entered is not valid.',
 }
+otp_regex = RegexValidator(regex="^[0-9]", message="The entered OTP code is not valid")
+phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message="The entered mobile phone is not valid")
 
 
 # ////////////////////// Admin Panel \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -46,7 +48,6 @@ class LoginForm(forms.Form):
 
 
 # /////////////////// Register User \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message="The entered mobile phone is not valid")
 
 
 class RegisterForm(LoginForm):
@@ -95,6 +96,29 @@ class RegisterForm(LoginForm):
         if (password2 and password) and (password2 != password):
             raise ValueError('Password and confirm password do not match')
         return password2
+
+
+class OtpVerifyRegisterForm(forms.Form):
+    email = forms.EmailField(label='Email', error_messages=messages,
+                             widget=forms.EmailInput(
+                                 attrs={
+                                     "id": "form1Example13",
+                                     "class": "form-control form-control-lg",
+                                     'placeholder': 'enter your email address . ',
+                                 }))
+
+    code = forms.CharField(label='Code', error_messages=messages,
+                           validators=[
+                               otp_regex,
+                               validators.MaxLengthValidator(limit_value=6, message="OTP code is 6 characters."),
+                               validators.MinLengthValidator(limit_value=6, message="OTP code is 6 characters."),
+                           ],
+
+                           widget=forms.TextInput(attrs={
+                               "id": "form1Example13",
+                               "class": "form-control form-control-lg",
+                               'placeholder': 'enter OTP code . ',
+                           }))
 
 
 # ////////////////////////////////// Password Reset User \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\

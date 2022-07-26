@@ -27,6 +27,8 @@ class UserManager(BaseUserManager):
         """Create and save a regular User with the given email and password."""
         extra_fields.setdefault('is_staff', False)
         extra_fields.setdefault('is_superuser', False)
+        extra_fields.setdefault('is_active', False)
+
         return self._create_user(email, phone_number, full_name, password, **extra_fields)
 
     def create_superuser(self, email, phone_number, full_name, password, **extra_fields):
@@ -51,6 +53,8 @@ class CustomUser(AbstractUser):
     full_name = models.CharField(max_length=100, verbose_name='Full name')
     avatar = models.ImageField(upload_to='uploads/accounts/avatar', blank=True, null=True)
     beo = models.TextField(blank=True, null=True)  # todo : change CKEditor
+
+    is_verify = models.DateTimeField(null=True, blank=True, default=None)
 
     objects = UserManager()
 
