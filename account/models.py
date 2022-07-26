@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.validators import RegexValidator
 from django.contrib.auth.models import AbstractUser, BaseUserManager
+from datetime import datetime
 
 
 class UserManager(BaseUserManager):
@@ -27,7 +28,6 @@ class UserManager(BaseUserManager):
         """Create and save a regular User with the given email and password."""
         extra_fields.setdefault('is_staff', False)
         extra_fields.setdefault('is_superuser', False)
-        extra_fields.setdefault('is_active', False)
 
         return self._create_user(email, phone_number, full_name, password, **extra_fields)
 
@@ -35,6 +35,7 @@ class UserManager(BaseUserManager):
         """Create and save a SuperUser with the given email and password."""
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
+        extra_fields.setdefault('is_active', True)
 
         if extra_fields.get('is_staff') is not True:
             raise ValueError('Superuser must have is_staff=True.')
@@ -55,6 +56,7 @@ class CustomUser(AbstractUser):
     beo = models.TextField(blank=True, null=True)  # todo : change CKEditor
 
     is_verify = models.DateTimeField(null=True, blank=True, default=None)
+    is_active = models.BooleanField(default=False, )
 
     objects = UserManager()
 
