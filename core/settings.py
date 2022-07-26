@@ -35,6 +35,8 @@ INSTALLED_APPS = [
     # my app
     'bucket.apps.BucketConfig',
     'account.apps.AccountConfig',
+    'general.apps.GeneralConfig',
+    'product.apps.ProductConfig',
 ]
 
 MIDDLEWARE = [

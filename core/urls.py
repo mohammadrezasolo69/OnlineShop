@@ -4,9 +4,10 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('account/', include('account.urls'), ),
-    path('oauth/', include('social_django.urls', namespace='social'))
+    path('admin/', admin.site.urls),  # admin panel django
+    path('account/', include('account.urls')),  # app account
+    path('product/', include('product.urls')),  # app product
+    path('oauth/', include('social_django.urls', namespace='social'))  # login GitHub
 ]
 
 if settings.DEBUG:
