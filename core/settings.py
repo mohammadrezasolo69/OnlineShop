@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     # 3rd party
     'storages',
     'social_django',
+    "taggit",
 
     # my app
     'bucket.apps.BucketConfig',
@@ -194,3 +195,6 @@ CACHES = {
 }
 
 EXPIRE_TIME_OTP = 120
+
+# Config taggit
+TAGGIT_CASE_INSENSITIVE = True
