@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views import generic
 
+from general.models import Slider
 from product.models import Category
 
 
@@ -13,7 +14,13 @@ class NavbarView(generic.View):
 
 
 class Home(generic.View):
+    """ Slider , new Product , discount Product ... """
+
     templates_name = 'general/home.html'
 
     def get(self, request):
-        return render(request, self.templates_name, {})
+        slider = Slider.objects.filter(active=True)
+        context = {
+            'sliders': slider,
+        }
+        return render(request, self.templates_name, context)
