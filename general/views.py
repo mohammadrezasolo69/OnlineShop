@@ -20,7 +20,10 @@ class Home(generic.View):
 
     def get(self, request):
         slider = Slider.objects.filter(active=True)
+        baner_category = Category.objects.last_three_objects()
+
         context = {
             'sliders': slider,
+            'baner_category': baner_category
         }
         return render(request, self.templates_name, context)

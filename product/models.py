@@ -6,6 +6,7 @@ from django.contrib.auth import get_user_model
 from taggit.managers import TaggableManager
 from django.core.validators import MaxValueValidator
 
+from product.manager import CategoryManager
 from product.utile.slug_generetor import unique_slug_generator
 
 
@@ -118,6 +119,8 @@ class Category(BaseModel):
     slug = models.SlugField(unique=True, blank=True)
     image = models.ImageField(upload_to='uploads/Galleries/images', blank=True)
     is_sub = models.BooleanField(default=False)
+
+    objects = CategoryManager()
 
 
 @receiver(pre_save, sender=Category)
