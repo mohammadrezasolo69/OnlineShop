@@ -23,10 +23,8 @@ class Product(BaseModel):
     description = models.TextField()  # todo : TextFields => CKEditor
     slug = models.SlugField(unique=True, blank=True)
     thumbnail_image = models.ImageField(upload_to='uploads/products/thumbnail_image')
-    thumbnail_image_alt = models.CharField(max_length=300)
+    thumbnail_image_alt = models.CharField(max_length=300, blank=True)
 
-    variant = models.ForeignKey("Variant", on_delete=models.CASCADE, related_name='products')
-    gallery = models.ForeignKey("Gallery", on_delete=models.CASCADE, related_name='products')
     category = models.ForeignKey("Category", on_delete=models.CASCADE, related_name='products')
     tags = TaggableManager()
 
@@ -35,7 +33,7 @@ class Product(BaseModel):
 def product_pre_save_receiver(sender, instance, *args, **kwargs):
     if not instance.slug:
         instance.slug = unique_slug_generator(instance)
-    if not instance.thumbnail_alt:
+    if not instance.thumbnail_image_alt:
         instance.thumbnail_image_alt = instance.title
 
 
@@ -46,11 +44,15 @@ class Variant(BaseModel):
         verbose_name = 'Variant'
         verbose_name_plural = 'Variants'
 
-    size = models.ForeignKey("Size", on_delete=models.CASCADE, related_name='variants')
+    def __str__(self):
+        return self.product.title
+
+    product = models.ForeignKey('Product', on_delete=models.CASCADE, related_name='variants')
+    size = models.ForeignKey('Size', on_delete=models.CASCADE, related_name='variants')
     color = models.ForeignKey("Color", on_delete=models.CASCADE, related_name='variants')
     price = models.ForeignKey("Price", on_delete=models.CASCADE, related_name='variants')
     brand = models.ForeignKey("Brand", on_delete=models.CASCADE, related_name='variants')
-    attribute = models.ForeignKey("Attribute", on_delete=models.CASCADE, related_name='variants', blank=True, null=True)
+    quantity = models.PositiveIntegerField(default=0)
 
 
 # ------------------------------ Size Model -------------------------------------------------------------------------
@@ -66,7 +68,7 @@ class Color(BaseModel):
     def __str__(self):
         return self.color
 
-    color = models.CharField(max_length=300)
+    color = models.CharField(max_length=300, blank=True, null=True)
 
 
 # ------------------------------ Price Model -------------------------------------------------------------------------
@@ -75,7 +77,7 @@ class Price(BaseModel):
     discount = models.PositiveIntegerField(default=0, validators=[MaxValueValidator(100)])
 
     def __str__(self):
-        return self.discount_price_finally
+        return str(self.discount_price_finally)
 
     @property
     def discount_price_finally(self):
@@ -83,10 +85,12 @@ class Price(BaseModel):
         return price_finally
 
 
-# ------------------------------ Gallery Model -------------------------------------------------------------------------
-class Attribute(BaseModel):
-    attribute = models.CharField(max_length=300, blank=True, null=True)
-    value = models.CharField(max_length=300, blank=True, null=True)
+# -------------------------------- Brand Model ----------------------------------------------------------------------
+class Brand(BaseModel):
+    def __str__(self):
+        return self.brand
+
+    brand = models.CharField(max_length=300, blank=True, null=True)
 
 
 # ------------------------------ Gallery Model -------------------------------------------------------------------------
@@ -96,12 +100,8 @@ class Gallery(BaseModel):
         verbose_name = 'Gallery'
         verbose_name_plural = 'Galleries'
 
+    product = models.ForeignKey("Product", on_delete=models.CASCADE, related_name='galleries')
     image = models.ImageField(upload_to='uploads/Galleries/images')
-
-
-# -------------------------------- Brand Model ----------------------------------------------------------------------
-class Brand(BaseModel):
-    brand = models.CharField(max_length=300, blank=True, null=True)
 
 
 # -------------------------------- Category Model ----------------------------------------------------------------------
@@ -110,10 +110,13 @@ class Category(BaseModel):
         verbose_name = 'Category'
         verbose_name_plural = 'Categories'
 
-    syb_category = models.ForeignKey('self', on_delete=models.CASCADE, related_name='categories')
+    def __str__(self):
+        return self.title
+
+    sub_category = models.ForeignKey('self', on_delete=models.CASCADE, related_name='categories', blank=True, null=True)
     title = models.CharField(max_length=300)
     slug = models.SlugField(unique=True, blank=True)
-    image = models.ImageField(upload_to='uploads/Galleries/images')
+    image = models.ImageField(upload_to='uploads/Galleries/images', blank=True)
 
 
 @receiver(pre_save, sender=Category)
