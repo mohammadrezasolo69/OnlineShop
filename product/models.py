@@ -117,6 +117,7 @@ class Category(BaseModel):
     title = models.CharField(max_length=300)
     slug = models.SlugField(unique=True, blank=True)
     image = models.ImageField(upload_to='uploads/Galleries/images', blank=True)
+    is_sub = models.BooleanField(default=False)
 
 
 @receiver(pre_save, sender=Category)
