@@ -12,6 +12,11 @@ from product.utile.slug_generetor import unique_slug_generator
 
 # ------------------------------ Product Model -------------------------------------------------------------------------
 class Product(BaseModel):
+    class TypeChoices(models.TextChoices):
+        new = 'new'
+        discount = 'discount'
+        normal = 'normal'
+
     class Meta:
         verbose_name = 'Product'
         verbose_name_plural = 'Products'
@@ -25,9 +30,16 @@ class Product(BaseModel):
     slug = models.SlugField(unique=True, blank=True)
     thumbnail_image = models.ImageField(upload_to='uploads/products/thumbnail_image')
     thumbnail_image_alt = models.CharField(max_length=300, blank=True)
-
+    price = models.PositiveIntegerField(default=0)
+    discount = models.PositiveIntegerField(default=0, validators=[MaxValueValidator(100)])
+    type = models.CharField(max_length=200, choices=TypeChoices.choices, default=TypeChoices.new)
     category = models.ForeignKey("Category", on_delete=models.CASCADE, related_name='products')
     tags = TaggableManager()
+
+    @property
+    def discount_price_finally(self):
+        price_finally = int(self.price * (100 - self.discount) / 100)
+        return price_finally
 
 
 @receiver(pre_save, sender=Product)
@@ -51,7 +63,6 @@ class Variant(BaseModel):
     product = models.ForeignKey('Product', on_delete=models.CASCADE, related_name='variants')
     size = models.ForeignKey('Size', on_delete=models.CASCADE, related_name='variants')
     color = models.ForeignKey("Color", on_delete=models.CASCADE, related_name='variants')
-    price = models.ForeignKey("Price", on_delete=models.CASCADE, related_name='variants')
     brand = models.ForeignKey("Brand", on_delete=models.CASCADE, related_name='variants')
     quantity = models.PositiveIntegerField(default=0)
 
@@ -70,20 +81,6 @@ class Color(BaseModel):
         return self.color
 
     color = models.CharField(max_length=300, blank=True, null=True)
-
-
-# ------------------------------ Price Model -------------------------------------------------------------------------
-class Price(BaseModel):
-    price = models.PositiveIntegerField(default=0)
-    discount = models.PositiveIntegerField(default=0, validators=[MaxValueValidator(100)])
-
-    def __str__(self):
-        return str(self.discount_price_finally)
-
-    @property
-    def discount_price_finally(self):
-        price_finally = int(self.price * (100 - self.discount) / 100)
-        return price_finally
 
 
 # -------------------------------- Brand Model ----------------------------------------------------------------------

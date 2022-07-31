@@ -1,5 +1,5 @@
 from django.contrib import admin
-from product.models import Product, Variant, Size, Color, Price, Brand, Category, Gallery
+from product.models import Product, Variant, Size, Color, Brand, Category, Gallery
 from django.utils.html import format_html
 
 
@@ -17,7 +17,7 @@ class GalleryInline(admin.TabularInline):
 # ---------------------------------------------------------------------------------------------------------------------
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('title', 'category', 'tag_list', 'active', 'thumbnail_image_tag')
+    list_display = ('title','id' ,'category', 'tag_list', 'active', 'thumbnail_image_tag')
     list_filter = ('category', 'active')
     list_editable = ('active',)
     search_fields = ('title', 'category')
@@ -44,10 +44,6 @@ class SizeAdmin(admin.ModelAdmin):
 class ColorAdmin(admin.ModelAdmin):
     pass
 
-
-@admin.register(Price)
-class PriceAdmin(admin.ModelAdmin):
-    pass
 
 
 @admin.register(Brand)
