@@ -200,7 +200,7 @@
                                     <i><del style="color: #ba2121;margin-right: 8px">${{ product.price|intcomma }}</del>
                                         </i>
                                 </span>
-                                <span class="block2-price m-text6 p-r-5">${{ product.discount_price_finally|intcomma}}</span>
+                                <span class="block2-price m-text6 p-r-5">${{ product.discount_price_finally|intcomma }}</span>
                             {% endif %}
 
                         </div>
@@ -210,10 +210,21 @@
                         </div>
 
                         <!-- Pagination -->
-                        <div class="pagination flex-m flex-w p-t-26">
-                            <a href="#" class="item-pagination flex-c-m trans-0-4 active-pagination">1</a>
-                            <a href="#" class="item-pagination flex-c-m trans-0-4">2</a>
-                        </div>
+                        {% if is_paginated %}
+                            <div class="pagination flex-m flex-w p-t-26">
+                                {% for page in paginator.page_range %}
+                                    {% if page == page_obj.number %}
+                                        <a href="?page={{ page }}"
+                                           class="item-pagination flex-c-m trans-0-4 active-pagination">{{ page }}</a>
+                                    {% else %}
+                                        <a href="?page={{ page }}" class="item-pagination
+                                                            flex-c-m trans-0-4">{{ page }}</a>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+
+
                         </div>
                     </div>
                 </div>
