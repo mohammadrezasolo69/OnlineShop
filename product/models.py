@@ -5,6 +5,7 @@ from django.dispatch import receiver
 from django.contrib.auth import get_user_model
 from taggit.managers import TaggableManager
 from django.core.validators import MaxValueValidator
+from django.urls import reverse
 
 from product.manager import CategoryManager, ProductManager
 from product.utile.slug_generetor import unique_slug_generator
@@ -42,6 +43,9 @@ class Product(BaseModel):
     def discount_price_finally(self):
         price_finally = int(self.price * (100 - self.discount) / 100)
         return price_finally
+
+    def get_absolute_url(self):
+        return reverse('product:product_detail', kwargs={'pk': self.id})
 
 
 @receiver(pre_save, sender=Product)

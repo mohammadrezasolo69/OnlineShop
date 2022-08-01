@@ -1,12 +1,25 @@
 from django.shortcuts import render
 from django.views import generic
+
 from product.models import Product, Category
+
 
 
 class ProductListView(generic.ListView):
     template_name = 'product/list_product.html'
     queryset = Product.objects.filter(active=True)
     paginate_by = 12
+
+
+class ProductDetailView(generic.DetailView):
+    template_name = 'product/detail_product.html'
+    model = Product
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['related'] = Product.objects.related_product(self.object)
+        print(context['related'])
+        return context
 
 
 class CategoryView(generic.ListView):

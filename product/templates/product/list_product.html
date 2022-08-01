@@ -29,15 +29,16 @@
 
                         {% render_partial 'product:category_partial' %}
 
+
                         <div class="search-product pos-relative bo4 of-hidden">
                             {% include 'inc/search.html' %}
                         </div>
+
                     </div>
                 </div>
 
 
                 <div class="col-sm-6 col-md-8 col-lg-9 p-b-50">
-                    <!--  -->
 
                     <div class="flex-sb-m flex-w p-b-35">
                         <span class="s-text8 p-t-5 p-b-5">
@@ -80,10 +81,11 @@
                         </div>
 
                         <div class="block2-txt p-t-20">
-                            <a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
-                                {{ product.title }}
+                            <a href="{{ product.get_absolute_url }}" class="block2-name dis-block s-text3 p-b-5">
+                                {{ product.id }}<br>{{ product.title }}
 
                             </a>
+
                             {% if product.discount == 0 %}
                                 <span class="block2-price m-text6 p-r-5">${{ product.discount_price_finally|intcomma }}</span>
                             {% else %}

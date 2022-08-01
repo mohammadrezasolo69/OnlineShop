@@ -17,3 +17,6 @@ class ProductManager(models.Manager):
                 Q(description__icontains=query_param)
         )
         return super().get_queryset().filter(lookup, active=True).distinct()
+
+    def related_product(self, product):
+        return super().get_queryset().filter(category=product.category).exclude(id=product.id)
