@@ -11,7 +11,7 @@
     </li>
     {% for category in object_list %}
         <li class="p-t-4">
-            <a href="#" class="s-text13">
+            <a href="{% url 'product:category_list' category.slug %}" class="s-text13">
                 {{ category.title }}
             </a>
         </li>

@@ -20,7 +20,7 @@
 
                         {% for category in categories %}
                             <li>
-                                <a href="index.html">{{ category.title }}</a>
+                                <a href="{% url 'product:category_list' category.slug %}">{{ category.title }}</a>
 
                                 {% for sub in category.categories.all %}
                                     <ul class="sub_menu">

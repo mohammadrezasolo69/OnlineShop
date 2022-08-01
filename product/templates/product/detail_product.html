@@ -16,7 +16,7 @@
             Product
             <i class="fa fa-angle-right m-l-8 m-r-9" aria-hidden="true"></i>
         </a>
-        <a href="product.html" class="s-text16">
+        <a href="{% url 'product:category_list' product.category.slug %}" class="s-text16">
             {{ product.category }}
             <i class="fa fa-angle-right m-l-8 m-r-9" aria-hidden="true"></i>
         </a>
@@ -208,55 +208,56 @@
                 <div class="slick2">
                     {% for product_related in related %}
                         <div class="item-slick2 p-l-15 p-r-15">
-                            <!-- Block2 -->
-                            <div class="block2">
-                            {% if product_related.type == 'new' %}
-                                <div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew">
-                            {% elif product_related.type == 'discount' %}
-                                <div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelsale">
-                            {% else %}
-                                <div class="block2-img wrap-pic-w of-hidden pos-relative ">
-                            {% endif %}
+                        <!-- Block2 -->
+                        <div class="block2">
+                        {% if product_related.type == 'new' %}
+                            <div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew">
+                        {% elif product_related.type == 'discount' %}
+                            <div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelsale">
+                        {% else %}
+                            <div class="block2-img wrap-pic-w of-hidden pos-relative ">
+                        {% endif %}
 
-                                    <img src="{{ product_related.thumbnail_image.url  }}"
-                                         alt="{{ product_related.thumbnail_image_alt }}">
+                    <img src="{{ product_related.thumbnail_image.url }}"
+                         alt="{{ product_related.thumbnail_image_alt }}">
 
-                                    <div class="block2-overlay trans-0-4">
-                                        <a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">
-                                            <i class="icon-wishlist icon_heart_alt" aria-hidden="true"></i>
-                                            <i class="icon-wishlist icon_heart dis-none" aria-hidden="true"></i>
-                                        </a>
+                    <div class="block2-overlay trans-0-4">
+                        <a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">
+                            <i class="icon-wishlist icon_heart_alt" aria-hidden="true"></i>
+                            <i class="icon-wishlist icon_heart dis-none" aria-hidden="true"></i>
+                        </a>
 
-                                        <div class="block2-btn-addcart w-size1 trans-0-4">
-                                            <!-- Button -->
-                                            <button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
-                                                Add to Cart
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
+                        <div class="block2-btn-addcart w-size1 trans-0-4">
+                            <!-- Button -->
+                            <button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                    </div>
 
-                                <div class="block2-txt p-t-20">
-                                    <a href="{{ product_related.get_absolute_url }}" class="block2-name dis-block s-text3 p-b-5">
-                                        {{ product_related.title|capfirst }}
-                                    </a>
-                                    {% if product_related.discount == 0 %}
-                                        <span class="block2-price m-text6 p-r-5">
+                    <div class="block2-txt p-t-20">
+                        <a href="{{ product_related.get_absolute_url }}" class="block2-name dis-block s-text3 p-b-5">
+                            {{ product_related.title|capfirst }}
+                        </a>
+                        {% if product_related.discount == 0 %}
+                            <span class="block2-price m-text6 p-r-5">
 									${{ product_related.discount_price_finally|intcomma }}
 								</span>
-                                    {% else %}
-                                        <span class="block2-price m-text6 p-r-5"><i><del style="color: #ba2121;margin-right: 8px">${{ product_related.price|intcomma }}</del>
+                        {% else %}
+                            <span class="block2-price m-text6 p-r-5"><i><del
+                                    style="color: #ba2121;margin-right: 8px">${{ product_related.price|intcomma }}</del>
                                         </i></span>
-                                        <span class="block2-price m-text6 p-r-5">${{ product_related.discount_price_finally|intcomma }}</span>
-                                    {% endif %}
-                                </div>
-                            </div>
-                        </div>
+                            <span class="block2-price m-text6 p-r-5">${{ product_related.discount_price_finally|intcomma }}</span>
+                        {% endif %}
+                    </div>
+                    </div>
+                    </div>
                     {% endfor %}
-                </div>
-            </div>
+                    </div>
+                    </div>
 
-        </div>
+                </div>
     </section>
 
 
