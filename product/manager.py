@@ -20,3 +20,12 @@ class ProductManager(models.Manager):
 
     def related_product(self, product):
         return super().get_queryset().filter(category=product.category).exclude(id=product.id)
+
+    def active(self):
+        return super().get_queryset().all().order_by('-id').filter(active=True)
+
+    def get_new_product(self):
+        return super().get_queryset().all().order_by('-id').filter(active=True, type='new')
+
+    def get_discount_product(self):
+        return super().get_queryset().all().order_by('-id').filter(active=True, discount__gt=0)
