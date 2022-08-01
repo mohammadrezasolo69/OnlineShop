@@ -6,7 +6,7 @@ from django.contrib.auth import get_user_model
 from taggit.managers import TaggableManager
 from django.core.validators import MaxValueValidator
 
-from product.manager import CategoryManager
+from product.manager import CategoryManager, ProductManager
 from product.utile.slug_generetor import unique_slug_generator
 
 
@@ -35,6 +35,8 @@ class Product(BaseModel):
     type = models.CharField(max_length=200, choices=TypeChoices.choices, default=TypeChoices.new)
     category = models.ForeignKey("Category", on_delete=models.CASCADE, related_name='products')
     tags = TaggableManager()
+
+    objects = ProductManager()
 
     @property
     def discount_price_finally(self):
