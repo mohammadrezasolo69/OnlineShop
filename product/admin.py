@@ -17,7 +17,7 @@ class GalleryInline(admin.TabularInline):
 # ---------------------------------------------------------------------------------------------------------------------
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('title','id' ,'category', 'tag_list', 'active', 'thumbnail_image_tag')
+    list_display = ('title', 'id', 'category', 'tag_list', 'active', 'thumbnail_image_tag')
     list_filter = ('category', 'active')
     list_editable = ('active',)
     search_fields = ('title', 'category')
@@ -45,7 +45,6 @@ class ColorAdmin(admin.ModelAdmin):
     pass
 
 
-
 @admin.register(Brand)
 class BrandAdmin(admin.ModelAdmin):
     pass
@@ -54,3 +53,4 @@ class BrandAdmin(admin.ModelAdmin):
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     pass
+

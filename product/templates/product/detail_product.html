@@ -24,6 +24,7 @@
         <span class="s-text17">
 			{{ product.title }}
 		</span>
+
     </div>
 
     <!-- Product Detail -->
@@ -140,8 +141,15 @@
                 </div>
 
                 <div class="p-b-45">
+                    {% if request.user in product.like.all %}
+                        <a href="{% url 'product:product_like' product.id %}" type="button" class="btn btn-danger">Unlike</a>
+                    {% else %}
+                        <a href="{% url 'product:product_like' product.id %}" type="button"
+                           class="btn btn-info">Like</a>
+                    {% endif %}
                     <span class="s-text8 m-r-35"></span>
-                    <span class="s-text8">Categories: {{ product.category }}</span>
+                    <span class="s-text8" style="margin-right: 20px">Like : {{ product.count_like }}</span>
+                    <span class="s-text8">Categories: {{ product.category }}</span><br>
                 </div>
 
                 <!--  -->

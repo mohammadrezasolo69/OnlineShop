@@ -1,7 +1,9 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views import generic
-
+from django.contrib.auth.mixins import LoginRequiredMixin
 from product.models import Product, Category
+from django.urls import reverse
+from django.http import Http404
 
 
 class ProductListView(generic.ListView):
@@ -17,7 +19,6 @@ class ProductDetailView(generic.DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['related'] = Product.objects.related_product(self.object)
-        print(context['related'])
         return context
 
 
@@ -60,3 +61,19 @@ class SearchView(generic.ListView):
         context = super().get_context_data(**kwargs)
         context['search'] = query_param
         return context
+
+
+class LikeView(LoginRequiredMixin, generic.View):
+    def get(self, request, pk):
+        url = request.META.get('HTTP_REFERER')
+        product = Product.objects.get(id=pk)
+        if product is None:
+            raise Http404
+
+        user = request.user
+        if product.like.filter(id=user.id).exists():
+            product.like.remove(user)
+        else:
+            product.like.add(user)
+        print(product.like.all())
+        return redirect(url)
