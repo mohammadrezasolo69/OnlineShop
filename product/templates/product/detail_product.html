@@ -147,6 +147,16 @@
                         <a href="{% url 'product:product_like' product.id %}" type="button"
                            class="btn btn-info">Like</a>
                     {% endif %}
+
+
+                    {% if request.user in product.favourite.all %}
+                        <a href="{% url 'product:product_favourite' product.id %}" type="button"
+                           class="btn btn-secondary ">Remove Favourite</a>
+                    {% else %}
+                        <a href="{% url 'product:product_favourite' product.id %}" type="button"
+                           class="btn btn-warning">Add Favourite</a>
+                    {% endif %}
+
                     <span class="s-text8 m-r-35"></span>
                     <span class="s-text8" style="margin-right: 20px">Like : {{ product.count_like }}</span>
                     <span class="s-text8">Categories: {{ product.category }}</span><br>

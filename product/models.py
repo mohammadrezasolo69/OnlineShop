@@ -29,6 +29,7 @@ class Product(BaseModel):
         return self.like.count()
 
     like = models.ManyToManyField(get_user_model(), related_name='likes')
+    favourite = models.ManyToManyField(get_user_model(), related_name='favourites')
     title = models.CharField(max_length=300)
     short_description = models.TextField(max_length=500)
     description = models.TextField()  # todo : TextFields => CKEditor

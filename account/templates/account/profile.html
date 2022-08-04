@@ -37,7 +37,10 @@
                                    style="margin-right: 10px;background-color:#ba2121">Logout</a>
                                 <a href="{% url 'account:password_change' %}" class="btn btn-primary">Change
                                     password</a>
-                                <a href="{% url 'account:profile_edit' request.user.id %}" class="btn btn-primary" style="margin-left: 10px;background-color:#6a6a6a">Edit</a>
+                                <a href="{% url 'account:profile_edit' request.user.id %}" class="btn btn-primary"
+                                   style="margin-left: 10px;background-color:#6a6a6a">Edit</a>
+                                <a href="{% url 'product:products_favourites_users' %}" class="btn btn-primary"
+                                   style="margin-left: 10px;background-color:#6a6a6a">Save</a>
                             </div>
                         </div>
                     </div>

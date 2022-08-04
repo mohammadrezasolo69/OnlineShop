@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% block title %} | کالاهای ذخیره شده شما {% endblock %}
+
+{% block main %}
+    <div class="p-3 mb-3">
+        <div class="row">
+            <div class="col-1"></div>
+            <div class="col-10">
+                <div class="align-items-center mx-auto">
+                    <div class="row card-group">
+                        {% for save in object_list %}
+                            <div class="col-6 col-md-3 mb-3">
+                                <a href="{{ save.get_absolute_url }}">
+                                    <div class="card">
+                                        <img src="{{ save.thumbnail_image.url }}" alt="{{ save.thumbnail_image_alt }}"
+                                             class="img-fluid card-img-top"/>
+                                        <div class="card-body">
+                                            <h6 class="card-title"> {{ save.title}}</h6>
+                                            <div class="price-container">
+                                                {% if save.discount == 0 %}
+                                                    <span class="block2-price m-text6 p-r-5">${{ save.discount_price_finally|intcomma }}</span>
+                                                {% else %}
+                                                    <span class="block2-price m-text6 p-r-5">
+                                    <i><del style="color: #ba2121;margin-right: 8px">${{ save.price|intcomma }}</del>
+                                        </i>
+                                </span>
+                                                    <span class="block2-price m-text6 p-r-5">${{ save.discount_price_finally|intcomma }}</span>
+                                                {% endif %}
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </a>
+                            </div>
+                        {% empty %}
+                            <p class="alert alert-info">
+                                You have not added any products to the saved list at the moment.
+                            </p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-1"></div>
+        </div>
+    </div>
+{% endblock %}

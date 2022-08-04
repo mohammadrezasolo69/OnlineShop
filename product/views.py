@@ -75,5 +75,26 @@ class LikeView(LoginRequiredMixin, generic.View):
             product.like.remove(user)
         else:
             product.like.add(user)
-        print(product.like.all())
         return redirect(url)
+
+
+class FavouriteView(LoginRequiredMixin, generic.View):
+    def get(self, request, pk):
+        url = request.META.get('HTTP_REFERER')
+        product = Product.objects.get(id=pk)
+        if product is None:
+            raise Http404
+        user = request.user.id
+        if product.favourite.filter(id=user).exists():
+            product.favourite.remove(user)
+        else:
+            product.favourite.add(user)
+        return redirect(url)
+
+
+class ListFavouritesView(LoginRequiredMixin, generic.ListView):
+    template_name = 'product/favourite_users.html'
+
+    def get_queryset(self):
+        products = Product.objects.filter(favourite=self.request.user.id)
+        return products
