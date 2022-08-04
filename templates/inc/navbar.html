@@ -62,10 +62,17 @@
             <div class="header-icons">
                 {% if request.user.is_authenticated %}
                     {% if request.user.avatar %}
-                        <a href="{% url 'admin:index' %}" class="header-wrapicon1 dis-block">
-                            <img src="{{ request.user.avatar.url }}" class="header-icon1"
-                                 alt="ICON" style="border-radius: 100px;width: 40px;height: 40px">
-                        </a>
+                        {% if request.user.is_admin %}
+                            <a href="{% url 'admin:index' %}" class="header-wrapicon1 dis-block">
+                                <img src="{{ request.user.avatar.url }}" class="header-icon1"
+                                     alt="ICON" style="border-radius: 100px;width: 40px;height: 40px">
+                            </a>
+                        {% else %}
+                            <a href="{% url 'account:profile' %}" class="header-wrapicon1 dis-block">
+                                <img src="{{ request.user.avatar.url }}" class="header-icon1"
+                                     alt="ICON" style="border-radius: 100px;width: 40px;height: 40px">
+                            </a>
+                        {% endif %}
                         <a href="{% url 'account:logout' %}" class="header-wrapicon1 dis-block">
                             Logout
                         </a>
