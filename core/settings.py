@@ -27,14 +27,19 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
 
     # 3rd party
+    "taggit",
     'storages',
     'social_django',
+    'django_render_partial',
 
     # my app
     'bucket.apps.BucketConfig',
     'account.apps.AccountConfig',
+    'general.apps.GeneralConfig',
+    'product.apps.ProductConfig',
 ]
 
 MIDDLEWARE = [
@@ -67,6 +72,9 @@ TEMPLATES = [
                 # social
                 'social_django.context_processors.backends',
                 'social_django.context_processors.login_redirect',
+
+                # render partial
+                'django.template.context_processors.request',
             ],
         },
     },
@@ -145,14 +153,14 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media', 'media_root')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # ARVAN CLOUD STORAGE
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-
-AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
-AWS_S3_ENDPOINT_URL = env('AWS_S3_ENDPOINT_URL')
-AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
-AWS_SERVICE_NAME = env('AWS_SERVICE_NAME')
-AWS_S3_FILE_OVERWRITE = env('AWS_S3_FILE_OVERWRITE')
+# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+#
+# AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
+# AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
+# AWS_S3_ENDPOINT_URL = env('AWS_S3_ENDPOINT_URL')
+# AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
+# AWS_SERVICE_NAME = env('AWS_SERVICE_NAME')
+# AWS_S3_FILE_OVERWRITE = env('AWS_S3_FILE_OVERWRITE')
 
 # Config UserModel
 AUTH_USER_MODEL = 'account.CustomUser'
@@ -192,3 +200,6 @@ CACHES = {
 }
 
 EXPIRE_TIME_OTP = 120
+
+# Config taggit
+TAGGIT_CASE_INSENSITIVE = True

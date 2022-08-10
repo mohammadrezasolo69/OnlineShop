@@ -3,7 +3,10 @@ from django.conf import settings
 
 
 class Bucket:
-    """ CDN Bucket manager """
+    """CDN Bucket manager
+       none of these methods are async. use public interface in tasks.py modules instead.
+       init method creates connection.
+    """
 
     def __init__(self):
         session = boto3.session.Session()
@@ -13,3 +16,4 @@ class Bucket:
             aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
             endpoint_url=settings.AWS_S3_ENDPOINT_URL,
         )
+
