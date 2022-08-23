@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_headers %}
+    <link rel="stylesheet" type="text/css" href="{% static 'login/css/login.css' %}">
+{% endblock %}
+
+
+{% block main %}
+    <section class="vh-100">
+        <div class="container py-5 h-100">
+            <div class="row d-flex align-items-center justify-content-center h-100">
+
+                {% if request.user.avatar %}
+                    <div class="col-md-8 col-lg-7 col-xl-6">
+                        <img src="{{ request.user.avatar.url }}" class="img-fluid" alt="Phone image"
+                             style="border-radius: 50px">
+                    </div>
+                {% else %}
+                    <div class="col-md-8 col-lg-7 col-xl-6">
+                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
+                             class="img-fluid" alt="Phone image"
+                             style="border-radius: 50px">
+                    </div>
+                {% endif %}
+
+                <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
+
+
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                        <div class="form-outline mb-4" style="padding-top: 20px">
+                            {{ form.full_name.label }}
+                            {{ form.full_name }}
+                            <span style="color: #ba2121;">{{ form.full_name.errors }}</span>
+                        </div>
+
+
+                        <div class="form-outline mb-4" style="padding-top: 20px">
+                            {{ form.email.label }}
+                            {{ form.email }}
+                            <span style="color: #ba2121;">{{ form.email.errors }}</span>
+                        </div>
+
+
+                        <div class="form-outline mb-4" style="padding-top: 20px">
+                            {{ form.phone_number.label }}
+                            {{ form.phone_number }}
+                            <span style="color: #ba2121;">{{ form.phone_number.errors }}</span>
+                        </div>
+
+
+                        <div class="form-outline mb-4" style="padding-top: 20px">
+                            {{ form.avatar.label }}
+                            {{ form.avatar }}
+                            <span style="color: #ba2121;">{{ form.avatar.errors }}</span>
+                        </div>
+
+
+                        <div class="form-outline mb-4" style="padding-top: 20px">
+                            {{ form.beo.label }}
+                            {{ form.beo }}
+                            <span style="color: #ba2121;">{{ form.beo.errors }}</span>
+                        </div>
+
+                        <!-- Submit button -->
+                        <button type="submit" class="btn btn-primary btn-lg btn-block">Update</button>
+
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
+

@@ -1,0 +1,199 @@
+{% load static %}
+
+<!-- Header -->
+<header class="header1">
+    <!-- Header desktop -->
+    <div class="container-menu-header">
+        <div class="wrap_header">
+
+            <!-- Logo -->
+            <a href="{% url 'general:home' %}" class="logo">
+                <img src="{% static 'main/images/icons/logo.png' %}" alt="IMG-LOGO">
+            </a>
+
+
+            <!-- Menu -->
+            <div class="wrap_menu">
+                <nav class="menu">
+                    <ul class="main_menu">
+
+
+                        {% for category in categories %}
+                            <li>
+                                <a href="{% url 'product:category_list' category.slug %}">{{ category.title }}</a>
+
+                                {% for sub in category.categories.all %}
+                                    <ul class="sub_menu">
+                                        <li><a href="index.html">{{ sub.title }}</a></li>
+                                    </ul>
+                                {% endfor %}
+
+                            </li>
+                        {% endfor %}
+
+
+
+                        <li class="sale-noti">
+                            <a href="product.html">Sale</a>
+                        </li>
+
+                        <li>
+                            <a href="cart.html">Features</a>
+                        </li>
+
+                        <li>
+                            <a href="blog.html">Blog</a>
+                        </li>
+
+                        <li>
+                            <a href="about.html">About</a>
+                        </li>
+
+                        <li>
+                            <a href="contact.html">Contact</a>
+                        </li>
+
+                    </ul>
+                </nav>
+            </div>
+
+
+            <!-- Header Icon -->
+            <div class="header-icons">
+                {% if request.user.is_authenticated %}
+                    {% if request.user.avatar %}
+                        {% if request.user.is_admin %}
+                            <a href="{% url 'admin:index' %}" class="header-wrapicon1 dis-block">
+                                <img src="{{ request.user.avatar.url }}" class="header-icon1"
+                                     alt="ICON" style="border-radius: 100px;width: 40px;height: 40px">
+                            </a>
+                        {% else %}
+                            <a href="{% url 'account:profile' %}" class="header-wrapicon1 dis-block">
+                                <img src="{{ request.user.avatar.url }}" class="header-icon1"
+                                     alt="ICON" style="border-radius: 100px;width: 40px;height: 40px">
+                            </a>
+                        {% endif %}
+                        <a href="{% url 'account:logout' %}" class="header-wrapicon1 dis-block">
+                            Logout
+                        </a>
+
+                    {% else %}
+                        {% if request.user.is_admin %}
+                            <a href="{% url 'account:profile' %}" class="header-wrapicon1 dis-block">
+                                <img src="{% static 'main/images/icons/icon-header-01.png' %}" class="header-icon1"
+                                     alt="ICON">
+                            </a>
+
+                            <a href="{% url 'account:logout' %}" class="header-wrapicon1 dis-block">
+                                Logout
+                            </a>
+                        {% else %}
+                            <a href="{% url 'account:profile' %}" class="header-wrapicon1 dis-block">
+                                <img src="{% static 'main/images/icons/icon-header-01.png' %}" class="header-icon1"
+                                     alt="ICON">
+                            </a>
+
+                            <a href="{% url 'account:logout' %}" class="header-wrapicon1 dis-block">
+                                Logout
+                            </a>
+                        {% endif %}
+
+
+                    {% endif %}
+
+                    <span class="linedivide1"></span>
+
+                    <div class="header-wrapicon2">
+
+                    <img src="{% static 'main/images/icons/icon-header-02.png' %}"
+                         class="header-icon1 js-show-header-dropdown" alt="ICON">
+                    <span class="header-icons-noti">0</span>
+
+                {% else %}
+                    <a href="{% url 'account:login' %}" class="header-wrapicon1 dis-block">
+                        Login
+                    </a>
+                    <span style="margin-left: 10px;margin-right: 10px;color: #00bbec">/</span>
+                    <a href="{% url 'account:register' %}" class="header-wrapicon1 dis-block">
+                        Register
+                    </a>
+                {% endif %}
+
+
+                <!-- Header cart noti -->
+                <div class="header-cart header-dropdown">
+                    <ul class="header-cart-wrapitem">
+                        <li class="header-cart-item">
+                            <div class="header-cart-item-img">
+                                <img src="{% static 'main/images/item-cart-01.jpg' %}" alt="IMG">
+                            </div>
+
+                            <div class="header-cart-item-txt">
+                                <a href="#" class="header-cart-item-name">
+                                    White Shirt With Pleat Detail Back
+                                </a>
+
+                                <span class="header-cart-item-info">
+											1 x $19.00
+										</span>
+                            </div>
+                        </li>
+
+                        <li class="header-cart-item">
+                            <div class="header-cart-item-img">
+                                <img src="{% static 'images/item-cart-02.jpg' %}" alt="IMG">
+                            </div>
+
+                            <div class="header-cart-item-txt">
+                                <a href="#" class="header-cart-item-name">
+                                    Converse All Star Hi Black Canvas
+                                </a>
+
+                                <span class="header-cart-item-info">
+											1 x $39.00
+										</span>
+                            </div>
+                        </li>
+
+                        <li class="header-cart-item">
+                            <div class="header-cart-item-img">
+                                <img src="{% static 'main/images/item-cart-03.jpg' %}" alt="IMG">
+                            </div>
+
+                            <div class="header-cart-item-txt">
+                                <a href="#" class="header-cart-item-name">
+                                    Nixon Porter Leather Watch In Tan
+                                </a>
+
+                                <span class="header-cart-item-info">
+											1 x $17.00
+										</span>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <div class="header-cart-total">
+                        Total: $75.00
+                    </div>
+
+                    <div class="header-cart-buttons">
+                        <div class="header-cart-wrapbtn">
+                            <!-- Button -->
+                            <a href="cart.html" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
+                                View Cart
+                            </a>
+                        </div>
+
+                        <div class="header-cart-wrapbtn">
+                            <!-- Button -->
+                            <a href="#" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
+                                Check Out
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
